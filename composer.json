@@ -1,0 +1,18 @@
+{
+    "name": "hs/equipment",
+    "description": "这是华视后台项目的个组件",
+    "type": "composer-pluin",
+    "autoload": {
+        "psr-4": {
+            "Hs\\Equipment\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "'fei'",
+            "email": "'13380320462@163.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
