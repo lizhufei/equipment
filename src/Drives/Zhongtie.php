@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Hs\Equipment\Drives;
+namespace Hsvisus\Equipment\Drives;
 
-use Hs\Equipment\EquipmentContract;
+use Hsvisus\Equipment\EquipmentContract;
 
 class Zhongtie implements EquipmentContract
 {

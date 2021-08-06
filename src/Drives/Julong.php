@@ -1,15 +1,15 @@
 <?php
 
 
-namespace Hs\Equipment\Drives;
+namespace Hsvisus\Equipment\Drives;
 
 use GuzzleHttp\Exception\ServerException;
-use Hs\Equipment\Driver;
-use Hs\Equipment\EquipmentContract;
-use Hs\Equipment\Models\Equipment_persons;
-use Hs\Equipment\Models\Face;
-use Hs\Equipment\Models\History;
-use Hs\Equipment\Models\Task;
+use Hsvisus\Equipment\Driver;
+use Hsvisus\Equipment\EquipmentContract;
+use Hsvisus\Equipment\Models\Equipment_persons;
+use Hsvisus\Equipment\Models\Face;
+use Hsvisus\Equipment\Models\History;
+use Hsvisus\Equipment\Models\Task;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 

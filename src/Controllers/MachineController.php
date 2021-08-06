@@ -1,9 +1,9 @@
 <?php
 
-namespace Hs\Equipment\Controllers;
+namespace Hsvisus\Equipment\Controllers;
 
-use Hs\Equipment\Driver;
-use Hs\Equipment\Models\Task;
+use Hsvisus\Equipment\Driver;
+use Hsvisus\Equipment\Models\Task;
 use Illuminate\Http\Request;
 use Equipment;
 

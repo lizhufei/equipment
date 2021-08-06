@@ -1,6 +1,6 @@
 <?php
 
-namespace Hs\Equipment\Middlewares;
+namespace Hsvisus\Equipment\Middlewares;
 
 use Closure;
 use Illuminate\Http\Request;

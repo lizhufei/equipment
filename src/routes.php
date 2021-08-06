@@ -1,6 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use Hs\Equipment\Controllers\MachineController;
+use Hsvisus\Equipment\Controllers\MachineController;
 
 
 Route::group([

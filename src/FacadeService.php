@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Hs\Equipment;
+namespace Hsvisus\Equipment;
 
 use Illuminate\Support\Facades\Facade;
 

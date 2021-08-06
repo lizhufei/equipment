@@ -4,7 +4,7 @@
     "type": "composer-pluin",
     "autoload": {
         "psr-4": {
-            "Hs\\Equipment\\": "src/"
+            "Hsvisus\\Equipment\\": "src/"
         }
     },
     "authors": [

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Hs\Equipment\Models;
+namespace Hsvisus\Equipment\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

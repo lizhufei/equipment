@@ -1,8 +1,8 @@
 <?php
 
-namespace Hs\Equipment;
+namespace Hsvisus\Equipment;
 
-use Hs\Equipment\Middlewares\CheckDeviceMiddleware;
+use Hsvisus\Equipment\Middlewares\CheckDeviceMiddleware;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 

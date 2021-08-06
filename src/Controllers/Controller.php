@@ -1,6 +1,6 @@
 <?php
 
-namespace Hs\Equipment\Controllers;
+namespace Hsvisus\Equipment\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

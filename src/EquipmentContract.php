@@ -3,7 +3,7 @@
  * 设备驱动接口.
  * 所有接入设备都必须继承此接口
  */
-namespace Hs\Equipment;
+namespace Hsvisus\Equipment;
 
 interface EquipmentContract
 {

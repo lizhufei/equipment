@@ -1,6 +1,6 @@
 <?php
 
-namespace Hs\Equipment;
+namespace Hsvisus\Equipment;
 
 
 class Equipment
