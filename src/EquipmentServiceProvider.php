@@ -2,7 +2,6 @@
 
 namespace Hsvisus\Equipment;
 
-use Hsvisus\Equipment\Middlewares\CheckDeviceMiddleware;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 
@@ -33,10 +32,12 @@ class EquipmentServiceProvider extends ServiceProvider implements DeferrableProv
      */
     public function boot()
     {
-        //添加中间件
-        $this->addMiddlewareAlias('admittance', CheckDeviceMiddleware::class);
+
         //路由
         $this->loadRoutesFrom(__DIR__.'/routes.php');
+        //添加中间件
+        //$this->app[\Illuminate\Contracts\Http\Kernel::class]->pushMiddleware(CheckDeviceMiddleware::class);
+        //$this->addMiddlewareAlias('admittance', CheckDeviceMiddleware::class);
         //配置文件
         $this->publishes([
             __DIR__.'/Config/equipment.php' => config_path('equipment.php'),

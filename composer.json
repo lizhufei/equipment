@@ -2,6 +2,7 @@
     "name": "hsvisus/equipment",
     "description": "这是华视后台项目的个组件",
     "type": "composer-pluin",
+    "license": "MPL-1.1",
     "autoload": {
         "psr-4": {
             "Hsvisus\\Equipment\\": "src/"

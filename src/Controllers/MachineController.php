@@ -5,7 +5,6 @@ namespace Hsvisus\Equipment\Controllers;
 use Hsvisus\Equipment\Driver;
 use Hsvisus\Equipment\Models\Task;
 use Illuminate\Http\Request;
-use Equipment;
 
 class MachineController extends Controller
 {
@@ -21,8 +20,8 @@ class MachineController extends Controller
      */
     public function heartbeat(Request $request, $device_sn)
     {
-        //更新设备在线状态
-        $this->driver->updateOnline($request->get('table'), $device_sn);
+        //更新设备在线状态$request->get('table')
+        $this->driver->updateOnline('equipments', $device_sn);
         //获取设备对象
         $equipment = $this->driver->getEquipmentObject($device_sn);
         $response = $equipment->heartRespond($device_sn, $request->input());

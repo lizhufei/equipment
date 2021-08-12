@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Driver
 {
-    private $drive_path = 'Hs\Equipment\Drives\\';
+    private $drive_path = 'Hsvisus\Equipment\Drives\\';
     /**
      * 更新在线状态
      * @param string $table
@@ -32,7 +32,6 @@ class Driver
         $producer = DB::table($table)
             ->where('device_sn', $device_sn)
             ->value('manufacturer');
-        //  $producer = 'shenyun';
         $obj = $this->drive_path . ucfirst($producer);
         return  new $obj();
     }
@@ -50,7 +49,7 @@ class Driver
             $base64_str = substr($base64_str, strpos($base64_str, ',')+1);
         }
         $name = md5(uniqid()). $suffix;
-        $path = config('equipment.face_path') .DIRECTORY_SEPARATOR. date('Ymd'). DIRECTORY_SEPARATOR. $name;
+        $path = config('equipment.face_path', 'records') .DIRECTORY_SEPARATOR. date('Ymd'). DIRECTORY_SEPARATOR. $name;
 
         $disk = Storage::disk('public');
         if ($disk->put($path, base64_decode($base64_str))){

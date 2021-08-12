@@ -17,7 +17,7 @@ class CheckDeviceMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $table     = config('equipment.table_name');
+        $table     = config('equipment.table_name', 'equipments');
         $device_sn = $request->route('device_sn');
         if(
             DB::table($table)

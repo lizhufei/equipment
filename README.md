@@ -2,4 +2,5 @@
 - 发布数据迁移后,把数据填充文件复制到项目`database/seeders`下并执行
   `php artisan db:seed --class=UserSeeder` and
   `php artisan db:seed --class=DeviceSeeder`
-- 发布配置 `php artisan vendor:publish --provider="Hs\Equipment\EquipmentServiceProvider"`
+- 发布配置 `php artisan vendor:publish --provider="Hsvisus\Equipment\EquipmentServiceProvider"`
+- 在项目中注册中间件 `'admittance' => \Hsvisus\Equipment\Middlewares\CheckDeviceMiddleware::class`
