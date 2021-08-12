@@ -1,8 +1,8 @@
 {
     "name": "hsvisus/equipment",
-    "description": "这是华视后台项目的个组件",
+    "description": "这是华视后台项目的人脸设备组件",
     "type": "composer-pluin",
-    "license": "MPL-1.1",
+    "license": "MPL",
     "autoload": {
         "psr-4": {
             "Hsvisus\\Equipment\\": "src/"
