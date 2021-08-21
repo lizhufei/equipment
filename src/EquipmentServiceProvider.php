@@ -12,6 +12,7 @@ class EquipmentServiceProvider extends ServiceProvider implements DeferrableProv
      * @var bool
      */
     protected $defer = true; // 延迟加载服务
+
     /**
      * Register services.
      *

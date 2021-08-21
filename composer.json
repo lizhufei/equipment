@@ -2,7 +2,7 @@
     "name": "hsvisus/equipment",
     "description": "这是华视后台项目的人脸设备组件",
     "type": "composer-pluin",
-    "license": "MPL",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Hsvisus\\Equipment\\": "src/"
@@ -14,6 +14,16 @@
             "email": "'13380320462@163.com"
         }
     ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hsvisus\\Equipment\\EquipmentServiceProvider"
+            ],
+            "aliases": {
+                "Hardware": "Hsvisus\\Equipment\\FacadeService"
+            }
+        }
+    },
     "minimum-stability": "dev",
     "require": {}
 }
