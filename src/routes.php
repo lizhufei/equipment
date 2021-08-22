@@ -2,9 +2,6 @@
 use Illuminate\Support\Facades\Route;
 use Hsvisus\Equipment\Controllers\MachineController;
 
-Route::post('heartbeat/{device_sn}', function (){
-    return 'fsdafsdf';
-}); //设备心跳同步
 Route::group([
     'prefix' => 'api',
     'middleware' => 'admittance'
