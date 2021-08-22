@@ -47,7 +47,7 @@ class Haiqing implements EquipmentContract
      */
     public function heartRespond(string $device_sn, $request=[]):array
     {
-        $stateCode = $request['data']['StateCode'];
+        $stateCode = $request['data']['StateCode']??1;
         $operatorInfo = $request['data']['OperatorInfo'];
         // StateCode=1时，不管平台无有任务，由于没处理完成，不能下发Taskid，即值为0
         if (1 == $stateCode){
