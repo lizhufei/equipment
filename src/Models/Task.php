@@ -30,11 +30,12 @@ class Task extends Model
      * @param string $device_sn
      * @return array
      */
-    protected function pending(string $device_sn)
+    protected function pending(string $device_sn, int $priority=0)
     {
         $model = $this->where([
             'device_sn' => $device_sn,
             'status' => 0,
+            'priority' => $priority
         ])->oldest()->first();
         if ($model && !empty($model->info)){
             $model->status = 1;

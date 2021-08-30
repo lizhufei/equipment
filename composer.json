@@ -1,7 +1,6 @@
 {
     "name": "hsvisus/equipment",
     "description": "这是华视后台项目的人脸设备组件",
-    "type": "composer-pluin",
     "license": "MIT",
     "autoload": {
         "psr-4": {

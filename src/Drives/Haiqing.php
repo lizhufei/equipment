@@ -9,6 +9,7 @@ use Hsvisus\Equipment\Models\Equipment_persons;
 use Hsvisus\Equipment\Models\Face;
 use Hsvisus\Equipment\Models\History;
 use Hsvisus\Equipment\Models\Task;
+use Hsvisus\Wechat\Models\Qr;
 
 class Haiqing implements EquipmentContract
 {
@@ -31,6 +32,10 @@ class Haiqing implements EquipmentContract
                 break;
             case 'delete':
                 $info = $this->del($device_sn, $data);
+                break;
+            case 'remote':
+                $info = $this->remote($device_sn);
+                $fields['priority'] = 1; //优先级 默认为0
                 break;
         }
         $fields['count'] = count($data);
@@ -57,8 +62,10 @@ class Haiqing implements EquipmentContract
         if (isset($request['data']['code']) && 200 == $request['data']['code']){
             $this->feedbackRespond($device_sn, $operatorInfo);
         }
-
-        $task = Task::pending($device_sn);
+        $task = Task::pending($device_sn, 1); //先下发优先级高的任务(比如远程开门)
+        if (empty($task)){
+            $task =  Task::pending($device_sn);
+        }
         if (empty($task)){
             return $this->responseData();
         }
@@ -93,6 +100,7 @@ class Haiqing implements EquipmentContract
             'temperature' => $info['Temperature']??0,
             'mask' => $info['isNoMask']??0 ,
             'screen_time' => $info['CreateTime'],
+            'orientation' => Face::orientation($device_sn)
         ];
         $fields['other'] = json_encode($info, 320);
         return Face::store($fields);
@@ -137,6 +145,21 @@ class Haiqing implements EquipmentContract
         }
         return History::store($logs, true);
     }
+
+    /**
+     * 设备扫开门二维码远程开门
+     * @param $device_sn
+     * @param $params
+     */
+    public function qr(string $device_sn, array $params)
+    {
+        $QRCodeInfo = $params['info']['QRcodeInfo'];
+        $state = Qr::state($QRCodeInfo);
+        if (1 == $state){
+            return Task::created($this->generate($device_sn, [], 'remote'));
+        }
+        return '';
+    }
     /**
      * 海清设备响应格式
      * @param string $info
@@ -168,7 +191,6 @@ class Haiqing implements EquipmentContract
             "DeviceID" => $device_sn,
             'operator' => 'AddPersons'
         ];
-        $personIds = [];
         foreach ($data as $index=>$item){
             if (empty($item->face)){
                 continue;
@@ -222,6 +244,25 @@ class Haiqing implements EquipmentContract
                 "PersonUUID" => array_map(function ($item) {
                     return $item->id;
                 }, $data)
+            ]
+        ];
+    }
+
+    /**
+     * 远程开门指令
+     * @param string $device_sn
+     * @param $data
+     * @return array
+     */
+    private function remote(string $device_sn, $data=[])
+    {
+        return[
+            "operator" => "OpenDoor",
+            "info" => [
+                "DeviceID" => $device_sn,
+                "Chn" => 0,
+                "status" => 1,
+                "msg" => "请通行"
             ]
         ];
     }

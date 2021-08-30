@@ -118,6 +118,7 @@ class Julong implements EquipmentContract
             'temperature' => 0,
             'mask' => $compareInfo['Attribute']['Mask'],
             'screen_time' => $captureInfo['CaptureTime'],
+            'orientation' => Face::orientation($device_sn),
         ];
 
         $fields['other'] = json_encode($compareInfo, 320);

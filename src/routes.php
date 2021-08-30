@@ -17,7 +17,9 @@ Route::group([
     Route::post('task/{device_sn}', [MachineController::class, 'issued']); //主动获取任务
     Route::post('feedback/{device_sn}', [MachineController::class, 'feedback']); //任务反馈
     Route::post('face/{device_sn}', [MachineController::class, 'face']); //上传人脸
+    Route::post('qr/{device_sn}', [MachineController::class, 'qr']); //扫开门二维码
 });
+
 
 
 

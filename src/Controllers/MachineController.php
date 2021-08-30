@@ -20,6 +20,7 @@ class MachineController extends Controller
      */
     public function heartbeat(Request $request, $device_sn)
     {
+        file_put_contents('device.txt', date('Y-m-d H:i:s') . "{$device_sn} 已连接...".PHP_EOL, FILE_APPEND);
         //更新设备在线状态$request->get('table')
         $this->driver->updateOnline('equipments', $device_sn);
         //获取设备对象
@@ -66,6 +67,21 @@ class MachineController extends Controller
         $pushData = Task::pending($device_sn);
         $response = $equipment->issuedRespond($device_sn, $pushData);
         return $this->formatResponse($response);
+    }
+
+    /**
+     * 扫开门二维码
+     * @param Request $request
+     * @param $device_sn
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function qr(Request $request, $device_sn)
+    {
+        $equipment = $this->driver->getEquipmentObject($device_sn);
+        $params = $request->input();
+        $response = $equipment->qr($device_sn, $params);
+        return $this->formatResponse($response);
+
     }
 
     /**

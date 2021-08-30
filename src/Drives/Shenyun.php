@@ -132,6 +132,7 @@ class Shenyun implements EquipmentContract
             'temperature' => $info['temperature'],
             'mask' => $info['mask'],
             'screen_time' => date('Y-m-d H:i:s',$info['screenTime']),
+            'orientation' => Face::orientation($device_sn),
         ];
         unset($info['img'],$info['userId'],$info['userName'],$info['temperature'],$info['screenTime']);
         $fields['other'] = json_encode($info, 320);
