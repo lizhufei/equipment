@@ -3,7 +3,7 @@
 
 namespace Hsvisus\Equipment\Events;
 
-use App\Models\Record;
+use Hsvisus\Equipment\Models\Face;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -14,7 +14,7 @@ class RecordCreatedEvent
 
     public $record;
 
-    public function __construct(Record $record)
+    public function __construct(Face $record)
     {
         $this->record = $record;
     }
