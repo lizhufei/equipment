@@ -3,6 +3,7 @@
 namespace Hsvisus\Equipment\Models;
 
 use Endroid\QrCode\Builder\Builder;
+use Hsvisus\Equipment\Events\RecordCreatedEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -13,14 +14,12 @@ class Face extends Model
 
     protected $table = 'records';
     protected $guarded = [];
-
     /**
      * 模型的事件映射
      * @var array
      */
     protected $dispatchesEvents = [
-        //'created' => UserSaved::class,
-        //'deleted' => UserDeleted::class,
+        'created' => RecordCreatedEvent::class
     ];
 
     protected function store(array $fields)

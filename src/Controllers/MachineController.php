@@ -20,7 +20,6 @@ class MachineController extends Controller
      */
     public function heartbeat(Request $request, $device_sn)
     {
-        file_put_contents('device.txt', date('Y-m-d H:i:s') . "{$device_sn} 已连接...".PHP_EOL, FILE_APPEND);
         //更新设备在线状态$request->get('table')
         $this->driver->updateOnline('equipments', $device_sn);
         //获取设备对象
