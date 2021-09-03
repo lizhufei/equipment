@@ -15,6 +15,7 @@ class CreateEquipmentPersonsTable extends Migration
         Schema::create('equipment_persons', function (Blueprint $table) {
             $table->string('device_sn')->comment('设备SN');
             $table->bigInteger('person_id')->comment('人员ID');
+            $table->dateTime('created_at')->comment('创建时间');
             $table->tinyInteger('status')->default(0)->comment('0正在下发1下发完成');
             $table->unique(['device_sn', 'person_id']); //联合唯一索引
         });

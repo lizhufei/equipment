@@ -27,18 +27,21 @@ class Equipment
     public function intermediary(array $device_sns, array $person_ids, string $operate='save')
     {
         $data = [];
+        $date = date('Y-m-d H:i:s');
         foreach ($device_sns as $dev){
             foreach ($person_ids as $per){
                 if ('delete' == $operate){
                     $data[] = Equipment_persons::where([
                         ['device_sn', '=', $dev],
-                        ['person_id', '=', $per]
+                        ['person_id', '=', $per],
+                        ['created_at', '=', $date]
                     ])->delete();
 
                 }else{
                     $data[] = [
                         'device_sn' => $dev,
-                        'person_id' => $per
+                        'person_id' => $per,
+                        'created_at' => $date
                     ];
                 }
 

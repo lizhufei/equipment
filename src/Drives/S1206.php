@@ -5,7 +5,7 @@ namespace Hsvisus\Equipment\Drives;
 
 use Hsvisus\Equipment\EquipmentContract;
 
-class Zhongtie implements EquipmentContract
+class S1206 implements EquipmentContract
 {
     /**
      * 创建下发任务
@@ -27,11 +27,16 @@ class Zhongtie implements EquipmentContract
      */
     public function heartRespond(string $device_sn, $request=null):array
     {
+        return [
+            "info" => "接收成功",
+            "resultCode" => 100,
+            "data" => ""
+        ];
 
     }
 
     /**
-     * 更新人脸信息
+     * 上传车牌信息
      * @param string $device_sn
      * @param array $other
      * @return mixed

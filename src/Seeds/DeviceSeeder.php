@@ -37,8 +37,8 @@ class DeviceSeeder extends Seeder
                 'updated_at' => $date,
             ],
             [
-                'name' => '中铁设备',
-                'mark' => 'zhongtie',
+                'name' => '中铁停车',
+                'mark' => 's1206',
                 'created_at' => $date,
                 'updated_at' => $date,
             ],
