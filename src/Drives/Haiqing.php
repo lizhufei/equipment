@@ -34,7 +34,7 @@ class Haiqing implements EquipmentContract
                 $info = $this->del($device_sn, $data);
                 break;
             case 'remote':
-                $info = $this->remote($device_sn);
+                $info = $this->remote($device_sn, $data);
                 $fields['priority'] = 1; //优先级 默认为0
                 break;
         }
@@ -91,7 +91,8 @@ class Haiqing implements EquipmentContract
      */
     public function uploadRespond(string $device_sn, $data)
     {
-        $info  = $data['info'];
+        $info = $data['info'];
+        $orientation = Face::orientation($device_sn);
         $fields = [
             'device_sn' => $device_sn,
             'person_id' => $info['PersonUUID']??'0',
@@ -100,10 +101,24 @@ class Haiqing implements EquipmentContract
             'temperature' => $info['Temperature']??0,
             'mask' => $info['isNoMask']??0 ,
             'screen_time' => $info['CreateTime'],
-            'orientation' => Face::orientation($device_sn)
+            'orientation' => $orientation
         ];
         $fields['other'] = json_encode($info, 320);
-        return Face::store($fields);
+        $response = [
+            'code' => 200, 'desc' => 'OK', 'openDoor' => 0, 'showInfo' => '禁止通行'
+        ];
+        if (!empty($info['PersonUUID'])){
+            $hook_class = config('equipment.device_hook');
+            $hook = new $hook_class;
+            if (method_exists($hook, 'hook')){
+                if($hook->hook($info['CreateTime'], $info['PersonUUID'], $orientation)){
+                    $response['openDoor'] = 1;
+                    $response['showInfo'] = '请通行';
+                }
+            }
+        }
+        Face::store($fields);
+        return $response;
     }
 
     /**
@@ -156,7 +171,7 @@ class Haiqing implements EquipmentContract
         $QRCodeInfo = $params['info']['QRcodeInfo'];
         $state = Qr::state($QRCodeInfo);
         if (1 == $state){
-            return Task::created($this->generate($device_sn, [], 'remote'));
+            return Task::create($this->generate($device_sn, [], 'remote'));
         }
         return '';
     }
@@ -261,8 +276,8 @@ class Haiqing implements EquipmentContract
             "info" => [
                 "DeviceID" => $device_sn,
                 "Chn" => 0,
-                "status" => 1,
-                "msg" => "请通行"
+                "status" => empty($data)? 1: $data['status'],
+                "msg" => empty($data)?"请通行":$data['msg']
             ]
         ];
     }
