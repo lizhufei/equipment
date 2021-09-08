@@ -12,6 +12,12 @@ Route::group([
     Route::post('syface/{device_sn}', [MachineController::class, 'face']); //人脸比对成功上传
     Route::post('syattribute/{device_sn}', [MachineController::class, 'face']); //人脸比对失败上传
     Route::post('syresult/{device_sn}', [MachineController::class, 'feedback']); //上传反馈记录
+    //深云v1设备接口
+    Route::get('device/dcit/api/eq/v1/face/sync', [MachineController::class, 'issued']);
+    Route::get('device/dcit/api/eq/v1/card/sync', [MachineController::class, 'card']); //下发门卡
+    Route::post('device/dcit/api/eq/v1/face/result', [MachineController::class, 'face']);
+    Route::post('device/dcit/api/eq/v1/card/result', [MachineController::class, 'cardFeedback']); //门卡上报
+
     //通用设备接口 有：巨龙，海清
     Route::post('heartbeat/{device_sn}', [MachineController::class, 'heartbeat']); //设备心跳同步
     Route::post('task/{device_sn}', [MachineController::class, 'issued']); //主动获取任务

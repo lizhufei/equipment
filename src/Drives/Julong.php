@@ -181,9 +181,14 @@ class Julong implements EquipmentContract
             ];
             History::store($data);
             //如果是删除就删掉中间表
-            if ('deletePerson' == $item['Action'] && 1 == $item['ResultCode']){
+            if (1 == $item['ResultCode']){
+                if ('deletePerson' == $item['Action']){
+                    Equipment_persons::clear($device_sn, $item['SN']);
+                }
+            }elseif('addPerson' == $item['Action']){
                 Equipment_persons::clear($device_sn, $item['SN']);
             }
+
         }
         return [
                 "Name"  => "resultResponse",

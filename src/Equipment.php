@@ -34,7 +34,6 @@ class Equipment
                     $data[] = Equipment_persons::where([
                         ['device_sn', '=', $dev],
                         ['person_id', '=', $per],
-                        ['created_at', '=', $date]
                     ])->delete();
 
                 }else{
@@ -52,6 +51,8 @@ class Equipment
         }
         return $data;
     }
+
+
 
 
 

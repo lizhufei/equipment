@@ -32,8 +32,8 @@ class Shenyun implements EquipmentContract
                 // "userRemark" => "学生",
                 "userImageUrl" => asset($item->face),
                 "operateTime" => $time,
-                "created_at" => $time,
-                "updated_at" => $time
+//                "created_at" => $time,
+//                "updated_at" => $time
             ];
         }
 
@@ -93,9 +93,16 @@ class Shenyun implements EquipmentContract
             'operate' => $data['operationType'],
         ];
         History::store($data);
-        if ('delete' == $data['operationType'] && 100 == $data['status']){
-            Equipment_persons::clear($device_sn, $data['userID']);
+        if (100 == $data['status']){
+            if ('delete' == $data['operationType']){
+                Equipment_persons::clear($device_sn, $data['userID']);
+            }
+        }else{
+            if ('save' == $data['operationType']){
+                Equipment_persons::clear($device_sn, $data['userID']);
+            }
         }
+
         return [
             "ret" => 0,
             "desc" => "Success"

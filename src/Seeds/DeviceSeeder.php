@@ -19,29 +19,29 @@ class DeviceSeeder extends Seeder
         DB::statement('TRUNCATE TABLE `manufactures`');
         DB::table('manufactures')->insert([
             [
-                'name' => '深云设备',
+                'name' => '深云类型',
                 'mark' => 'shengyun',
                 'created_at' => $date,
                 'updated_at' => $date,
             ],
             [
-                'name' => '巨龙设备',
+                'name' => '深云类型V1',
+                'mark' => 'shengyun_v1',
+                'created_at' => $date,
+                'updated_at' => $date,
+            ],
+            [
+                'name' => '巨龙类型',
                 'mark' => 'julong',
                 'created_at' => $date,
                 'updated_at' => $date,
             ],
             [
-                'name' => '海清设备',
+                'name' => '海清类型',
                 'mark' => 'haiqing',
                 'created_at' => $date,
                 'updated_at' => $date,
-            ],
-            [
-                'name' => '中铁停车',
-                'mark' => 's1206',
-                'created_at' => $date,
-                'updated_at' => $date,
-            ],
+            ]
         ]);
     }
 }

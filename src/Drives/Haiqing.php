@@ -37,6 +37,9 @@ class Haiqing implements EquipmentContract
                 $info = $this->remote($device_sn, $data);
                 $fields['priority'] = 1; //优先级 默认为0
                 break;
+            case 'add_card':
+                $info = $this->add_card($device_sn, $data);
+                break;
         }
         $fields['count'] = count($data);
         $fields['created_at'] =$fields['updated_at'] = $time;
@@ -141,6 +144,9 @@ class Haiqing implements EquipmentContract
                 'created_at' => $time,
                 'updated_at' => $time
             ];
+            if ('AddPersons' == $operatorInfo['operator']){
+                Equipment_persons::clear($device_sn, $item['PersonUUID']);
+            }
         }
         foreach ($operatorInfo['SuccessInfo'] as $item){
             $logs[] = [
@@ -280,6 +286,44 @@ class Haiqing implements EquipmentContract
                 "msg" => empty($data)?"请通行":$data['msg']
             ]
         ];
+    }
+
+    /**
+     * 单独添加IC卡
+     * @param string $device_sn
+     * @param array $data IC卡号数据
+     */
+    private function add_card(string $device_sn, $data=[])
+    {
+
+        $info = [
+            "Total" => count($data),
+            "DeviceID" => $device_sn,
+            'operator' => 'AddPersons'
+        ];
+        foreach ($data as $index=>$item){
+            if (empty($item->face)){
+                continue;
+            }
+            $info["Personinfo_{$index}"] = [
+                "Name" => 'IC卡',
+                "IdCard" => $item->no, //身份证卡号
+                "IdCardId" => $item->no,//身份证卡号
+                "Telnum" => $item->no,
+                "Gender" => 0,
+                "MjCardNo" => $item->no, //韦根卡号
+                "RFIDCard" => $item->no,//Id卡卡号，最大长度为18个字符长度,针对内置刷卡机型
+                "AccessId" => $item->no, //门禁卡号
+                "IdType" => 2, //0:CustomizeID, 1:LibID,(修改使用) 2:PersonUUID
+                "picURI" => asset($item->face), //图片网络地址
+                "ValidEnd" => '', //过期时间
+                "ValidBegin" => '', //开始时间
+                "Tempvalid" => 0, //0永久名单 1 临时名单（按过期时间）2临时名单（每天时间 段）3临时名单（有效次数）
+                "PersonType" => 0, //0: 白名单 1: 黑名单
+                "PersonUUID" => uniqid(),
+            ];
+        }
+        return $info;
     }
 
 }
