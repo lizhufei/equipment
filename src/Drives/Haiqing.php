@@ -101,7 +101,6 @@ class Haiqing implements EquipmentContract
         $orientation = Face::orientation($device_sn);
         $fields = [
             'device_sn' => $device_sn,
-            'person_id' => is_integer($info['PersonUUID'])?:0,
             'name' => $info['Name']??'陌生人',
             'temperature' => $info['Temperature']??0,
             'mask' => $info['isNoMask']??0 ,
@@ -113,6 +112,7 @@ class Haiqing implements EquipmentContract
             $hook = new $hook_class;
             if (isset($data['SanpPic'])){
                 $fields['face'] = (new Driver())->storeBase64($data['SanpPic']);
+                $fields['person_id'] = $info['PersonUUID'];
                 if (
                     method_exists($hook, 'faceOpenDoor') &&
                     $hook->faceOpenDoor($info['CreateTime'], $info['PersonUUID'], $orientation)
@@ -121,6 +121,7 @@ class Haiqing implements EquipmentContract
                     $response['showInfo'] = '请通行';
                 }
             }else if(!empty($info['RFIDCard'])){
+                $fields['person_id'] = 0;
                 if (
                     method_exists($hook, 'cardOpenDoor') &&
                     $hook->cardOpenDoor($device_sn, $info['RFIDCard'])
