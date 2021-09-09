@@ -41,6 +41,10 @@ class MachineController extends Controller
         $response = $equipment->uploadRespond($device_sn, $data);
         return $this->formatResponse($response);
     }
+    public function card(Request $request, $device_sn)
+    {
+
+    }
 
     /**
      * 下发反馈 - 深云+巨龙

@@ -19,6 +19,7 @@ Route::group([
     Route::post('device/dcit/api/eq/v1/card/result', [MachineController::class, 'cardFeedback']); //门卡上报
 
     //通用设备接口 有：巨龙，海清
+    //Route::post('card/{device_sn}',  [MachineController::class, 'card']); //刷卡上传
     Route::post('heartbeat/{device_sn}', [MachineController::class, 'heartbeat']); //设备心跳同步
     Route::post('task/{device_sn}', [MachineController::class, 'issued']); //主动获取任务
     Route::post('feedback/{device_sn}', [MachineController::class, 'feedback']); //任务反馈

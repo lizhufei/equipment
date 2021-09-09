@@ -95,26 +95,36 @@ class Haiqing implements EquipmentContract
     public function uploadRespond(string $device_sn, $data)
     {
         $info = $data['info'];
+        $response = [
+            'code' => 200, 'desc' => 'OK', 'openDoor' => 0, 'showInfo' => '禁止通行'
+        ];
         $orientation = Face::orientation($device_sn);
         $fields = [
             'device_sn' => $device_sn,
-            'person_id' => $info['PersonUUID']??'0',
+            'person_id' => is_integer($info['PersonUUID'])?:0,
             'name' => $info['Name']??'陌生人',
-            'face' => (new Driver())->storeBase64($data['SanpPic']),
             'temperature' => $info['Temperature']??0,
             'mask' => $info['isNoMask']??0 ,
             'screen_time' => $info['CreateTime'],
             'orientation' => $orientation
         ];
-        $fields['other'] = json_encode($info, 320);
-        $response = [
-            'code' => 200, 'desc' => 'OK', 'openDoor' => 0, 'showInfo' => '禁止通行'
-        ];
-        if (!empty($info['PersonUUID'])){
+        if (1==$info['Sendintime']){
             $hook_class = config('equipment.device_hook');
             $hook = new $hook_class;
-            if (method_exists($hook, 'hook')){
-                if($hook->hook($info['CreateTime'], $info['PersonUUID'], $orientation)){
+            if (isset($data['SanpPic'])){
+                $fields['face'] = (new Driver())->storeBase64($data['SanpPic']);
+                if (
+                    method_exists($hook, 'faceOpenDoor') &&
+                    $hook->faceOpenDoor($info['CreateTime'], $info['PersonUUID'], $orientation)
+                ){
+                    $response['openDoor'] = 1;
+                    $response['showInfo'] = '请通行';
+                }
+            }else if(!empty($info['RFIDCard'])){
+                if (
+                    method_exists($hook, 'cardOpenDoor') &&
+                    $hook->cardOpenDoor($device_sn, $info['RFIDCard'])
+                ){
                     $response['openDoor'] = 1;
                     $response['showInfo'] = '请通行';
                 }
@@ -310,7 +320,10 @@ class Haiqing implements EquipmentContract
                 "IdCard" => $item->no, //身份证卡号
                 "IdCardId" => $item->no,//身份证卡号
                 "Telnum" => $item->no,
-                "Gender" => 0,
+                "Gender" => 1,
+                "MjCardFrom" => 2,   //手动下发卡号
+                "RFCardMode" => 0, //下发内置刷卡卡号使用十进制下发
+                "WiegandType" => 1, //使用韦根34位
                 "MjCardNo" => $item->no, //韦根卡号
                 "RFIDCard" => $item->no,//Id卡卡号，最大长度为18个字符长度,针对内置刷卡机型
                 "AccessId" => $item->no, //门禁卡号
@@ -320,10 +333,11 @@ class Haiqing implements EquipmentContract
                 "ValidBegin" => '', //开始时间
                 "Tempvalid" => 0, //0永久名单 1 临时名单（按过期时间）2临时名单（每天时间 段）3临时名单（有效次数）
                 "PersonType" => 0, //0: 白名单 1: 黑名单
-                "PersonUUID" => uniqid(),
+                "PersonUUID" => 'c_'.$item->no,
             ];
         }
         return $info;
     }
 
 }
+
