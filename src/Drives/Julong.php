@@ -37,18 +37,19 @@ class Julong implements EquipmentContract
                         "PhotoType" => 0, //人员图片下发类型 （默认0） 0：URL的方式; PersonPhotoUrl字段 1：Base64的方式; PersonPhoto字段
                         "PersonPhotoUrl" => asset($item->face), //人脸图片URL地址
                         "PersonId" => "{$item->id}", //跟开发文档不一样,这个得放到PersonInfo外面
+                        "PersonName" => $item->name,
+                        "Sex" => $item->sex,  //性别 1：男  2：女  0：未知
+                        "IDCard" => $item->identity, //身份证号
+                        "Phone" => $item->phone,
+                        "LimitTime" => 0,//人员有效时间限制0 : 永久有效1 : 周期有效
+                        "StartTime" => "",//开始时间
+                        "EndTime" => "",//结束时间
+                        "PersonIdentity" => 1,
+                        "IdentityAttribute" => 1,
+                        "Label" => "职员", //人员标签
+                        "ICCardNo" => isset($item->card)? $item->card->no: '', //IC卡号
                         "PersonInfo" => [
-                            "PersonName" => $item->name,
-                            "Sex" => $item->sex,  //性别 1：男  2：女  0：未知
-                            "IDCard" => $item->identity, //身份证号
-                            "Phone" => $item->phone,
-                            "LimitTime" => 0,//人员有效时间限制0 : 永久有效1 : 周期有效
-                            "StartTime" => "",//开始时间
-                            "EndTime" => "",//结束时间
-                            "PersonIdentity" => 1,
-                            "IdentityAttribute" => 1,
-                            "Label" => "职员", //人员标签
-                            "ICCardNo" => isset($item->card)? $item->card->no: '', //IC卡号
+
                         ]
                         // "PersonPhoto" => "...(base64)...", //人脸BASE64
                     ];

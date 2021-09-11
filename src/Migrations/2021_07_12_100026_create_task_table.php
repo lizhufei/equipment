@@ -12,16 +12,16 @@ class CreateTaskTable extends Migration
      */
     public function up()
     {
-        if (env('IS_TASK', 1)){
-            Schema::create('issued_tasks', function (Blueprint $table) {
-                $table->id();
-                $table->string('device_sn')->comment('设备SN');
-                $table->integer('count')->nullable()->comment('下发总数');
-                $table->json('info')->comment('任务载荷数据');
-                $table->tinyInteger('status')->default(0)->comment('0等待下发 1已下发 ');
-                $table->timestamps();
-            });
-        }
+
+        Schema::create('issued_tasks', function (Blueprint $table) {
+            $table->id();
+            $table->string('device_sn')->comment('设备SN');
+            $table->integer('count')->nullable()->comment('下发总数');
+            $table->json('info')->comment('任务载荷数据');
+            $table->tinyInteger('status')->default(0)->comment('0等待下发 1已下发 ');
+            $table->timestamps();
+        });
+
     }
 
     /**
