@@ -4,6 +4,9 @@ namespace Hsvisus\Equipment;
 
 
 use Hsvisus\Equipment\Models\Equipment_persons;
+use Hsvisus\Equipment\Models\Task;
+use Illuminate\Http\Request;
+use mysql_xdevapi\SqlStatementResult;
 
 class Equipment
 {
@@ -50,6 +53,30 @@ class Equipment
             return Equipment_persons::insert($data);
         }
         return $data;
+    }
+
+    /**
+     * 获取设备里的人员
+     * @param Request $request
+     * @return mixed
+     */
+    public function inDevicePersons(Request $request)
+    {
+        $device_sn = $request->get('device_sn', '');
+        $name = $request->get('name', '');
+        return Equipment_persons::getPersons($device_sn, $name);
+    }
+
+    /**
+     * 删除设备里的人
+     * @param string $device_sn
+     * @param  $persons
+     */
+    public function deleteDevicePerson(string $device_sn, $persons)
+    {
+        $deviceObj = $this->getEquipmentObj($device_sn);
+        $tasks = $deviceObj->generate($device_sn, $persons, 'delete');
+        return Task::created($tasks);
     }
 
 

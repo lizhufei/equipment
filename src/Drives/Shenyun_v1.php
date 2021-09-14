@@ -19,7 +19,7 @@ class Shenyun_v1 implements EquipmentContract
      * @param string $operate
      * @return array|null
      */
-    public function generate(string $device_sn, array $data, string $operate)
+    public function generate(string $device_sn, $data, string $operate)
     {
         $time = Carbon::now();
         $fields['device_sn'] = $device_sn;

@@ -19,7 +19,7 @@ class Haiqing implements EquipmentContract
      * @param array $data
      * @param string $operate
      */
-    public function generate(string $device_sn, array $data, string $operate='save')
+    public function generate(string $device_sn, $data, string $operate='save')
     {
         $time = date('Y-m-d H:i:s');
         $fields['device_sn'] = $device_sn;
@@ -269,15 +269,17 @@ class Haiqing implements EquipmentContract
      */
     private function del(string $device_sn, $data)
     {
+        $personIds = [];
+        foreach ($data as $item){
+            $personIds[] = $item->id;
+        }
         return[
             "operator" => "DeletePerson",
             "info" => [
                 "IdType" => 2,
                 "DeviceID" => $device_sn,
                 "TotalNum" => count($data),
-                "PersonUUID" => array_map(function ($item) {
-                    return $item->id;
-                }, $data)
+                "PersonUUID" => $personIds
             ]
         ];
     }

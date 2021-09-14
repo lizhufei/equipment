@@ -13,10 +13,10 @@ class Shenyun implements EquipmentContract
     /**
      * 创建下发任务
      * @param string $device_sn
-     * @param array $data
+     * @param $data
      * @param array $operate
      */
-    public function generate(string $device_sn, array $data, string $operate='save'):array
+    public function generate(string $device_sn, $data, string $operate='save'):array
     {
         $time = date('Y-m-d H:i:s');
         $fields['device_sn'] = $device_sn;

@@ -18,11 +18,11 @@ class Julong implements EquipmentContract
     /**
      * 分配任务
      * @param string $device_sn
-     * @param array $data
+     * @param  $data
      * @param string $operate
      * @return array|void
      */
-    public function generate(string $device_sn, array $data, string $operate='save')
+    public function generate(string $device_sn, $data, string $operate='save')
     {
         $count = 0;
         $info = [];
